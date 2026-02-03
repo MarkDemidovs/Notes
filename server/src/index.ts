@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
-import usersRouter from "./routes/users";
+import notesRouter from "./routes/notes";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-app.use("/users", usersRouter);
+app.use("/notes", notesRouter);
 
 const port = Number(process.env.PORT) || 4000;
 app.listen(port, () => {
