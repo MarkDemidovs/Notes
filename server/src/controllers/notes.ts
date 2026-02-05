@@ -41,3 +41,22 @@ export const titleRenameNote = async (req: Request, res: Response) => {
         res.status(500).json({ error: "title rename failed "})
     }
 }
+
+export const contentRenameNote = async (req: Request, res: Response) => {
+    const { newContent } = req.body;
+    const { id } = req.params;
+
+    try {
+        const { rows } = await pool.query(
+            "UPDATE notes SET content = $1 WHERE id = $2 RETURNING *",
+            [newContent, id]
+        );
+
+        if (rows.length === 0 ) {
+            return res.status(404).json({ error: "Note not found!" });
+        }
+        res.status(200).json(rows[0])
+    } catch (error) {
+        res.status(500).json({ error: "content rename failed "})
+    }
+}
