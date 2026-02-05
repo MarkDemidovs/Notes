@@ -24,7 +24,7 @@ export const createNote = async (req: Request, res: Response) => {
 }
 
 export const titleRenameNote = async (req: Request, res: Response) => {
-    const { newTitle} = req.body;
+    const { newTitle } = req.body;
     const { id } = req.params;
 
     try {
