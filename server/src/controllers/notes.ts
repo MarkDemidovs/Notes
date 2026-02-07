@@ -3,15 +3,18 @@ import pool from "../db";
 
 export const getNotes = async (req: Request, res: Response) => {
     try {
-        const { rows } = await pool.query("SELECT * FROM notes");      
+        const { rows } = await pool.query("SELECT * FROM notes");
         res.json(rows);
     } catch (error) {
-        res.status(500).json({ error: "Something went wrong in the controller."});
+        res.status(500).json({ error: "Something went wrong in the controller." });
     }
 }
 export const createNote = async (req: Request, res: Response) => {
     const { title, content } = req.body;
 
+    if (!title || !content) {
+        return res.status(400).json({ error: "Title and content are required" });
+    }
     try {
         const { rows } = await pool.query(
             "INSERT INTO notes (title, content) VALUES ($1, $2) RETURNING *",
@@ -33,12 +36,12 @@ export const titleRenameNote = async (req: Request, res: Response) => {
             [newTitle, id]
         );
 
-        if (rows.length === 0 ) {
+        if (rows.length === 0) {
             return res.status(404).json({ error: "Note not found!" });
         }
         res.status(200).json(rows[0])
     } catch (error) {
-        res.status(500).json({ error: "title rename failed "})
+        res.status(500).json({ error: "title rename failed " })
     }
 }
 
@@ -52,12 +55,12 @@ export const contentRenameNote = async (req: Request, res: Response) => {
             [newContent, id]
         );
 
-        if (rows.length === 0 ) {
+        if (rows.length === 0) {
             return res.status(404).json({ error: "Note not found!" });
         }
         res.status(200).json(rows[0])
     } catch (error) {
-        res.status(500).json({ error: "content rename failed "})
+        res.status(500).json({ error: "content rename failed " })
     }
 }
 
@@ -69,11 +72,11 @@ export const deleteNote = async (req: Request, res: Response) => {
             "DELETE FROM notes WHERE id = $1 RETURNING *",
             [id]
         );
-        
+
         if (rows.length === 0) {
             return res.status(404).json({ error: "Note not found" });
         }
-        
+
         res.json({ message: "Note deleted", note: rows[0] });
     } catch (error) {
         res.status(500).json({ error: "Delete failed" });
