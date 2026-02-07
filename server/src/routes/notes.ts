@@ -5,6 +5,7 @@ const router = Router();
 
 router.get("/", getNotes);
 router.post("/", createNote);
-router.patch("/:id/title", titleRenameNote)
+router.patch("/:id/title", titleRenameNote);
+router.patch("/:id/content", contentRenameNote);
 
 export default router;
