@@ -69,9 +69,6 @@ export const deleteNote = async (req: Request, res: Response) => {
             "DELETE FROM notes WHERE id = $1",
             [id]
         );
-        if (rows.length === 0 ) {
-            return res.status(404).json({ error: "Note not found!" });
-        }
         res.status(200).json(rows[0]);
     } catch (error) {
         res.status(500).json({ error: "delete note failed" })
