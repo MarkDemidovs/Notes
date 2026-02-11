@@ -24,3 +24,10 @@ async function apiFetch<T>(
 export function getNotes(): Promise<NoteType[]> {
   return apiFetch<NoteType[]>("/notes");
 }
+
+export function createNote(title: string, content: string): Promise<NoteType> {
+  return apiFetch<NoteType>("/notes", {
+    method: "POST",
+    body: JSON.stringify({ title, content })
+  });
+}
