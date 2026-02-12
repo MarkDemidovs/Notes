@@ -27,12 +27,16 @@ export default function NotesPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Notes</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold mb-6">Notes</h1>
+        <button className="rounded shadow border border-gray-300 p-2 w-8 h-8 flex items-center justify-center">+</button>
+      </div>
       <div className="gap-6 flex">
         {notes.map(note => (
           <Note key={note.id} title={note.title} content={note.content} />
         ))}
       </div>
+
     </div>
   );
 
